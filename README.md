@@ -1,7 +1,5 @@
 # 🏏 Cricket Runs Prediction App
 
-This project is a **Machine Learning + Streamlit Web App** that predicts the number of runs a cricket player might score based on match statistics.
-
 ---
 
 ## 🚀 Features
