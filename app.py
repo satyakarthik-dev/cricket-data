@@ -4,11 +4,17 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 
 # -------------------------------
-# Load Dataset
+# Create Dummy Dataset (NO CSV)
 # -------------------------------
 @st.cache_data
 def load_data():
-    data = pd.read_csv("cricket_dataset.csv")
+    data = pd.DataFrame({
+        'Balls_Faced': [5, 10, 15, 20, 25, 30, 35, 40, 45, 50],
+        'Fours':       [0, 1, 2, 2, 3, 4, 4, 5, 5, 6],
+        'Sixes':       [0, 0, 1, 1, 1, 2, 2, 2, 3, 3],
+        'Strike_Rate': [80, 90, 100, 110, 120, 130, 135, 140, 145, 150],
+        'Runs':        [4, 12, 20, 28, 35, 45, 55, 65, 75, 90]
+    })
     return data
 
 data = load_data()
@@ -21,7 +27,9 @@ def train_model(data):
     X = data[['Balls_Faced', 'Fours', 'Sixes', 'Strike_Rate']]
     y = data['Runs']
     
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=0.2, random_state=42
+    )
     
     model = LinearRegression()
     model.fit(X_train, y_train)
@@ -33,9 +41,9 @@ model = train_model(data)
 # -------------------------------
 # Streamlit UI
 # -------------------------------
-st.title("🏏 Cricket Runs Predictor")
+st.title("🏏 Cricket Runs Predictor (No CSV Version)")
 
-st.write("Enter player details to predict runs")
+st.write("Enter player stats to predict runs")
 
 # User Inputs
 balls = st.number_input("Balls Faced", min_value=0)
@@ -51,7 +59,7 @@ if st.button("Predict Runs"):
     st.success(f"🏆 Predicted Runs: {round(prediction[0], 2)}")
 
 # -------------------------------
-# Show Dataset (Optional)
+# Optional: Show Dataset
 # -------------------------------
-if st.checkbox("Show Dataset"):
-    st.write(data.head())
+if st.checkbox("Show Sample Dataset"):
+    st.write(data)
